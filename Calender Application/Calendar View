@@ -1,0 +1,33 @@
+CalendarView.jsx:
+
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+
+const CalendarView = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    // Replace with API to fetch communications
+    setEvents([
+      { date: "2024-12-20", type: "LinkedIn Post" },
+      { date: "2024-12-25", type: "Email" },
+    ]);
+  }, []);
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Calendar View</h1>
+      <Calendar
+        tileContent={({ date, view }) => {
+          const event = events.find(
+            (e) => new Date(e.date).toDateString() === date.toDateString()
+          );
+          return event ? <p>{event.type}</p> : null;
+        }}
+      />
+    </div>
+  );
+};
+
+export default CalendarView;

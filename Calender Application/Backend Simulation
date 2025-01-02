@@ -1,0 +1,37 @@
+Use JSON-server for mock data.
+
+Install JSON-server:
+
+npm install -g json-server
+
+Create a db.json file:
+
+{
+  "companies": [
+    {
+      "id": 1,
+      "name": "ABC Corp",
+      "location": "New York",
+      "linkedin": "https://linkedin.com/company/abc-corp",
+      "emails": ["contact@abc.com"],
+      "phoneNumbers": ["+123456789"],
+      "comments": "Key partner for our marketing projects.",
+      "periodicity": "2 weeks",
+      "lastCommunications": [
+        { "type": "LinkedIn Post", "date": "2024-12-20" },
+        { "type": "Email", "date": "2024-12-15" }
+      ]
+    }
+  ],
+  "communicationMethods": [
+    { "id": 1, "name": "LinkedIn Post", "description": "Social media interaction", "sequence": 1, "mandatory": true },
+    { "id": 2, "name": "LinkedIn Message", "description": "Direct message on LinkedIn", "sequence": 2, "mandatory": true },
+    { "id": 3, "name": "Email", "description": "Business email", "sequence": 3, "mandatory": true },
+    { "id": 4, "name": "Phone Call", "description": "Direct phone call", "sequence": 4, "mandatory": false }
+  ]
+}
+
+Run the server:
+
+json-server --watch db.json --port 5000
+

@@ -1,0 +1,41 @@
+api.js:
+
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://localhost:5000",
+});
+
+export default api;
+
+App.jsx:
+
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AdminDashboard from "./components/AdminDashboard";
+import UserDashboard from "./components/UserDashboard";
+import CalendarView from "./components/CalendarView";
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/user" element={<UserDashboard />} />
+          <Route path="/calendar" element={<CalendarView />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+Run the Application
+
+json-server --watch db.json --port 5000
+
+Start the React application:
+
+npm start

@@ -1,0 +1,16 @@
+/src
+  /components
+    AdminDashboard.jsx
+    UserDashboard.jsx
+    CalendarView.jsx
+    CommunicationModal.jsx
+  /services
+    api.js
+  /pages
+    AdminPage.jsx
+    UserPage.jsx
+  /utils
+    constants.js
+    helpers.js
+  App.jsx
+  index.js

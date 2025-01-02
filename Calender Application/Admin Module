@@ -1,0 +1,124 @@
+AdminDashboard.jsx:
+
+import React, { useState, useEffect } from "react";
+import axios from "../services/api";
+
+const AdminDashboard = () => {
+  const [companies, setCompanies] = useState([]);
+  const [newCompany, setNewCompany] = useState({
+    name: "",
+    location: "",
+    linkedin: "",
+    emails: "",
+    phoneNumbers: "",
+    comments: "",
+    periodicity: "2 weeks",
+  });
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    const response = await axios.get("/companies");
+    setCompanies(response.data);
+  };
+
+  const handleAddCompany = async () => {
+    await axios.post("/companies", {
+      ...newCompany,
+      emails: newCompany.emails.split(","),
+      phoneNumbers: newCompany.phoneNumbers.split(","),
+    });
+    fetchCompanies();
+    setNewCompany({
+      name: "",
+      location: "",
+      linkedin: "",
+      emails: "",
+      phoneNumbers: "",
+      comments: "",
+      periodicity: "2 weeks",
+    });
+  };
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+      <h2 className="text-xl font-semibold">Add Company</h2>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleAddCompany();
+        }}
+      >
+        <input
+          className="border p-2 m-2"
+          type="text"
+          placeholder="Name"
+          value={newCompany.name}
+          onChange={(e) => setNewCompany({ ...newCompany, name: e.target.value })}
+          required
+        />
+        <input
+          className="border p-2 m-2"
+          type="text"
+          placeholder="Location"
+          value={newCompany.location}
+          onChange={(e) =>
+            setNewCompany({ ...newCompany, location: e.target.value })
+          }
+          required
+        />
+        <input
+          className="border p-2 m-2"
+          type="text"
+          placeholder="LinkedIn Profile"
+          value={newCompany.linkedin}
+          onChange={(e) =>
+            setNewCompany({ ...newCompany, linkedin: e.target.value })
+          }
+        />
+        <input
+          className="border p-2 m-2"
+          type="text"
+          placeholder="Emails (comma-separated)"
+          value={newCompany.emails}
+          onChange={(e) =>
+            setNewCompany({ ...newCompany, emails: e.target.value })
+          }
+        />
+        <input
+          className="border p-2 m-2"
+          type="text"
+          placeholder="Phone Numbers (comma-separated)"
+          value={newCompany.phoneNumbers}
+          onChange={(e) =>
+            setNewCompany({ ...newCompany, phoneNumbers: e.target.value })
+          }
+        />
+        <textarea
+          className="border p-2 m-2"
+          placeholder="Comments"
+          value={newCompany.comments}
+          onChange={(e) =>
+            setNewCompany({ ...newCompany, comments: e.target.value })
+          }
+        ></textarea>
+        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+          Add Company
+        </button>
+      </form>
+      <h2 className="text-xl font-semibold mt-4">Company List</h2>
+      <ul>
+        {companies.map((company) => (
+          <li key={company.id} className="p-2 border-b">
+            {company.name} - {company.location}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default AdminDashboard;

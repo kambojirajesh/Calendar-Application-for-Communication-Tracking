@@ -1,3 +1,25 @@
 npx create-react-app communication-tracking
 cd communication-tracking
 npm install tailwindcss react-router-dom axios react-calendar react-icons
+
+Tailwind CSS Configuration:
+
+Initialize Tailwind:
+
+npx tailwindcss init
+
+Update tailwind.config.js:
+
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+Add Tailwind directives in src/index.css:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

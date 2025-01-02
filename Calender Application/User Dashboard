@@ -1,0 +1,51 @@
+UserDashboard.jsx:
+
+import React, { useState, useEffect } from "react";
+import axios from "../services/api";
+
+const UserDashboard = () => {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    const response = await axios.get("/companies");
+    setCompanies(response.data);
+  };
+
+  return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
+      <table className="w-full border-collapse border border-gray-400">
+        <thead>
+          <tr>
+            <th className="border border-gray-300 p-2">Company Name</th>
+            <th className="border border-gray-300 p-2">Last 5 Communications</th>
+            <th className="border border-gray-300 p-2">Next Scheduled</th>
+          </tr>
+        </thead>
+        <tbody>
+          {companies.map((company) => (
+            <tr key={company.id}>
+              <td className="border border-gray-300 p-2">{company.name}</td>
+              <td className="border border-gray-300 p-2">
+                {company.lastCommunications?.map((comm, index) => (
+                  <div key={index}>
+                    {comm.type} - {comm.date}
+                  </div>
+                ))}
+              </td>
+              <td className="border border-gray-300 p-2">
+                {company.periodicity}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default UserDashboard;
